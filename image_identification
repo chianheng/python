@@ -1,0 +1,94 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import PIL
+from PIL import Image
+import time
+from collections import Counter
+
+#You need first to create a folder named numbers
+#Inside the folder you should have images of numbers from 0 to 9
+#Each number should have 9 versions eg: 0.1 or 0.9
+#Every version shows different type of number value (you can create yourself use paint)
+#Total number of images is 90
+
+#This function used to call the images inside numbers folder and convert into array and finally save in text file named numb.txt
+def createExamples():
+		#Create a text file
+		numberArrayExamples = open('numb.txt','a')
+		#set number
+		numbersWeHave = range(0,10)
+		versionsWeHave = range(1,10)
+	
+		for eachNum in numbersWeHave:
+			for eachVer in versionsWeHave:
+				print str(eachNum)+'.'+str(eachVer)
+				#open images
+				imgFilePath = 'numbers/'+str(eachNum)+'.'+str(eachVer)+'.png'
+				ei = Image.open(imgFilePath)
+				#convert to array
+				eiar = np.array(ei)
+				eiar1 = str(eiar.tolist())
+				#write to text file
+				lineToWrite = str(eachNum)+'::'+eiar1+'\n'
+				numberArrayExamples.write(lineToWrite)
+
+createExamples()
+
+#This function used to identify the image we put in the filepath whether match with the library we store in numd.txt
+def whatNumIsThis(filePath):
+		matchedAr = []
+		loadExamps = open('numb.txt','r').read()
+		loadExamps = loadExamps.split('\n')
+	
+		i = Image.open(filePath)
+		iar = np.array(i)
+		iarl = iar.tolist()
+	
+		inQuestion = str(iarl)
+	
+		for eachExample in loadExamps:
+			if len(eachExample) > 3:
+				splitEx = eachExample.split('::')
+				currentNum = splitEx[0]
+				currentAr = splitEx[1]
+			
+				eachPixEx = currentAr.split('],')
+				eachPixInQ = inQuestion.split('],')
+			
+				x=0
+			
+				while x < len(eachPixEx):
+					if eachPixEx[x] == eachPixInQ[x]:
+						matchedAr.append(int(currentNum))
+					
+					x += 1
+				
+		print matchedAr
+		x = Counter(matchedAr)
+		print x
+		
+		graphX = []
+		graphY = []
+		
+		for eachThing in x:
+			print eachThing
+			graphX.append(eachThing)
+			print x[eachThing]
+			graphY.append(x[eachThing])
+			
+		fig = plt.figure()
+		ax1 = plt.subplot2grid((4,4),(0,0), rowspan=1, colspan=4)
+		ax2 = plt.subplot2grid((4,4),(0,1), rowspan=3, colspan=4)
+
+		ax1.imshow(iar)
+		ax2.bar(graphX,graphY, align='center')
+		plt.ylim(300)
+		
+		xloc = plt.MaxNLocator(12)
+		ax2.xaxis.set_major_locator(xloc)
+		
+		plt.show()
+#create an new number image call test.png
+whatNumIsThis('test.png')
+
+#after run the function, there would has a bar plot which showing statistical results for matching
