@@ -1,0 +1,10 @@
+# use extend function to paste repeatly in array
+def CreateDataSet(Number):
+	Output = []
+	for i in range(Number):
+		a = ("Hello World")
+		Output.extend(a)
+		print(Output)
+	return Output		
+
+dataset = CreateDataSet(6)
