@@ -1,0 +1,23 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import PILimport numpy as np
+import matplotlib.pyplot as plt
+import PIL
+from PIL import Image
+
+#Use paint to create a 8 x 8 pixes and mark a dot on top-left then save as dot.png
+#Open an image
+i = Image.open('dot.png')
+
+#Convert image into array
+iar = np.asarray(i)
+
+#Output the array results
+print(iar)
+
+#There are total of 8 rows and 8 columns of the image.
+#The marked dot will change 1st row and 1st column to [0 0 0 255]
+
+#Generate plots
+plt.imshow(iar)
+plt.show()
