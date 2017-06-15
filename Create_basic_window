@@ -1,0 +1,30 @@
+#This code used to create a basic window using gui
+
+import sys
+import PyQt5 
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+
+class App(QMainWindow):
+
+    def __init__(self):
+                
+        super().__init__()
+        self.title = 'Basic Window'
+        self.left = 200
+        self.top = 100
+        self.width = 640
+        self.height = 480
+        self.home()
+
+    def home(self):
+        self.setWindowTitle(self.title)
+        self.setGeometry(self.left, self.top, self.width, self.height)
+        self.setWindowIcon(QIcon('icon.png'))
+        self.statusBar().showMessage('This is a basic window')
+        self.show()
+if __name__ == '__main__':
+        app = QApplication(sys.argv)
+        ex = App()
+        sys.exit(app.exec_())
