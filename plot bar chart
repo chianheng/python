@@ -1,0 +1,30 @@
+# Import all libraries
+import pandas as pd
+from numpy import random
+import matplotlib.pyplot as plt
+import matplotlib 
+
+#create library
+web_stats = {'Day':[1,2,3,4,5,6],
+			'Visitors':[43, 53, 34, 45, 64, 34],
+			'Bounce_Rate':[65, 72, 62, 64, 54, 66],
+			'Name':['Bob','Jessica','Mary','Mary','Bob']}
+
+#Connect the data
+LinkedDataSet = list(zip(web_stats['Bounce_Rate'],web_stats['Name']))
+
+#convert to dataframe 
+df = pd.DataFrame(data = LinkedDataSet, columns=['Bounce_Rate', 'Name'])
+
+# Create a groupby object
+name = df.groupby('Name')
+
+# Apply the sum function to the groupby object
+df = name.sum()
+
+# Create bar graph
+df['Bounce_Rate'].plot.bar()
+
+plt.show()
+
+
